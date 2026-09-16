@@ -175,11 +175,11 @@
   .shot .cat{ font-size:0.68rem; letter-spacing:0.16em; text-transform:uppercase; color: rgba(255,255,255,.85); }
   .shot .ttl{ font-family:'Cormorant Garamond', serif; font-weight:500; font-style:italic; color:#fff; font-size:1.15rem; margin-top:3px; }
 
-  .s1{ grid-column: span 3; aspect-ratio:4/3; background: linear-gradient(150deg,#8a6b3f,#4a4030); }
-  .s2{ grid-column: span 3; aspect-ratio:4/3; background: linear-gradient(150deg,#3c4a3a,#1f271f); }
-  .s3{ grid-column: span 2; aspect-ratio:1/1; background: linear-gradient(150deg,#6b6153,#302c25); }
-  .s4{ grid-column: span 2; aspect-ratio:1/1; background: linear-gradient(150deg,#a68a56,#5a4a2f); }
-  .s5{ grid-column: span 2; aspect-ratio:1/1; background: linear-gradient(150deg,#4c5c48,#242c22); }
+  .s1{ grid-column: span 3; aspect-ratio:4/3; background: url(images/corner green porsche cr.jpg) center/cover; }
+  .s2{ grid-column: span 3; aspect-ratio:4/3; background: url(images/verstappen audi.jpg) center/cover; }
+  .s3{ grid-column: span 2; aspect-ratio:1/1; background: url(images/gecko mada cr.jpg) center/cover; }
+  .s4{ grid-column: span 2; aspect-ratio:1/1; background: url(images/sinj.jpg) center/cover; }
+  .s5{ grid-column: span 2; aspect-ratio:1/1; background: url(images/sinj2.jpg) center/cover; }
   .s6{ grid-column: span 4; aspect-ratio:16/9; background: linear-gradient(150deg,#37342c,#141310); }
   .s7{ grid-column: span 2; aspect-ratio:1/1; background: linear-gradient(150deg,#7a6444,#332a1c); }
   .s8{ grid-column: span 3; aspect-ratio:4/3; background: linear-gradient(150deg,#5c6b52,#232920); }
@@ -206,30 +206,6 @@
   .stats{ display:grid; grid-template-columns: repeat(3,1fr); gap:24px; margin-top:38px; border-top:1px solid var(--line); padding-top:32px; }
   .stat b{ font-family:'Cormorant Garamond', serif; font-size:2.1rem; font-weight:500; display:block; }
   .stat span{ color:var(--muted); font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; }
-
-  /* PRESTATIONS */
-  .prestations{
-    border: 1px solid var(--line); padding: clamp(36px,6vw,72px);
-    display:grid; grid-template-columns: 1.1fr 0.9fr; gap:48px; align-items:center;
-  }
-  .prestations h2{ font-size: clamp(1.7rem,3vw,2.3rem); margin-bottom:18px; }
-  .prestations p{ color:var(--muted); line-height:1.8; max-width:50ch; }
-  .presto-list{ list-style:none; padding:0; margin:26px 0 0; display:flex; flex-direction:column; gap:14px; }
-  .presto-list li{ display:flex; align-items:baseline; gap:12px; color:var(--muted); font-size:0.98rem; }
-  .presto-list li::before{ content:'—'; color: var(--accent); flex-shrink:0; }
-  .notify-form{ display:flex; gap:0; margin-top:32px; flex-wrap:wrap; border-bottom: 1px solid var(--text); max-width:420px; }
-  .notify-form input{
-    flex:1; min-width:180px; padding:13px 4px; border:none; background:transparent; color:var(--text);
-    font-family:'Jost', sans-serif; font-size:0.95rem;
-  }
-  .notify-form input:focus{ outline:none; }
-  .notify-form button{
-    background:none; border:none; font-family:'Jost',sans-serif; font-size:0.75rem; letter-spacing:0.14em;
-    text-transform:uppercase; cursor:pointer; color: var(--accent); padding: 13px 6px;
-  }
-  .presto-side{ border: 1px solid var(--line); padding:30px; text-align:center; }
-  .presto-side .price{ font-family:'Cormorant Garamond', serif; font-size:2rem; font-style:italic; color:var(--muted); }
-  .presto-side p{ color:var(--muted); font-size:0.9rem; margin-top:14px; line-height:1.7; max-width:none; }
 
   /* CONTACT */
   .contact{ display:grid; grid-template-columns:1fr 1fr; gap:64px; }
@@ -327,15 +303,15 @@
     <button class="filter-btn" data-filter="nature">Nature</button>
   </div>
   <div class="gallery" id="galleryGrid">
-    <div class="shot s1" data-cat="auto"><div><div class="cat">Automobile</div><div class="ttl">Calandre, à l'aube</div></div></div>
-    <div class="shot s2" data-cat="nature"><div><div class="cat">Nature</div><div class="ttl">Brume sur les crêtes</div></div></div>
-    <div class="shot s3" data-cat="archi"><div><div class="cat">Architecture</div><div class="ttl">Balcon filant</div></div></div>
-    <div class="shot s4" data-cat="auto"><div><div class="cat">Automobile</div><div class="ttl">Chrome et reflets</div></div></div>
-    <div class="shot s5" data-cat="nature"><div><div class="cat">Nature</div><div class="ttl">Lisière, heure bleue</div></div></div>
+    <div class="shot s1" data-cat="auto"><div><div class="cat">Automobile</div><div class="ttl">Dernière danse, Catalogne</div></div></div>
+    <div class="shot s2" data-cat="auto"><div><div class="cat">Automobile</div><div class="ttl">A roues serrées</div></div></div>
+    <div class="shot s3" data-cat="nature"><div><div class="cat">Nature</div><div class="ttl">Gecko, Phelsuma madagascariensis</div></div></div>
+    <div class="shot s4" data-cat="nature"><div><div class="cat">Nature</div><div class="ttl">Eulemur coronatus</div></div></div>
+    <div class="shot s5" data-cat="nature"><div><div class="cat">Nature</div><div class="ttl">Eulemur albifrons</div></div></div>
     <div class="shot s6" data-cat="archi"><div><div class="cat">Architecture</div><div class="ttl">Cour haussmannienne</div></div></div>
-    <div class="shot s7" data-cat="auto"><div><div class="cat">Automobile</div><div class="ttl">Profil, contre-jour</div></div></div>
-    <div class="shot s8" data-cat="nature"><div><div class="cat">Nature</div><div class="ttl">Chemin de vignes</div></div></div>
-    <div class="shot s9" data-cat="archi"><div><div class="cat">Architecture</div><div class="ttl">Pierre de taille</div></div></div>
+    <div class="shot s7" data-cat="archi"><div><div class="cat">Architecture</div><div class="ttl">Profil, contre-jour</div></div></div>
+    <div class="shot s8" data-cat="auto"><div><div class="cat">Automobile</div><div class="ttl">Chemin de vignes</div></div></div>
+    <div class="shot s9" data-cat="auto"><div><div class="cat">Automobile</div><div class="ttl">Pierre de taille</div></div></div>
   </div>
 </section>
 
