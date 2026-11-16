@@ -81,6 +81,14 @@
     .tab::after{ bottom:-1px; }
   }
 
+  .lang-toggle{
+    background:transparent; border:1px solid var(--line); color:var(--muted); cursor:pointer;
+    font-family:'Jost', sans-serif; font-size:0.72rem; letter-spacing:0.14em; padding:6px 11px;
+    margin-left:-12px; transition: color .2s, border-color .2s;
+  }
+  .lang-toggle:hover{ color:var(--accent); border-color:var(--accent); }
+  @media (max-width:720px){ .lang-toggle{ margin:0 0 12px; } }
+
   /* HERO artistique : bannière plein écran */
   .hero-banner{
     position:relative; min-height:100vh; display:flex; align-items:center; justify-content:center;
@@ -335,7 +343,8 @@
         <a class="tab" href="#professionnel" data-tab="professionnel">Professionnel</a>
         <a class="tab" href="#artistique" data-tab="artistique" aria-current="page">Artistique</a>
       </div>
-      <a class="nav-contact" href="#contact" data-contact>Contact</a>
+      <a class="nav-contact" href="mailto:enzomaronnier.pro@gmail.com" data-contact>Contact</a>
+      <button type="button" class="lang-toggle" id="lang-toggle" aria-label="Switch language" lang="en">EN</button>
     </div>
   </nav>
 </header>
@@ -364,7 +373,7 @@
         <span class="kicker">Parcours</span>
         <h2>Expériences et formation</h2>
       </div>
-      <span class="num">Du conseil bancaire au luxe automobile</span>
+      <span class="num">De la relation client au luxe automobile</span>
     </div>
 
     <h3 class="group-title">Expériences</h3>
@@ -503,7 +512,7 @@
     </div>
     <p class="pro-contact-note">Pour toute opportunité ou prise de contact, un message suffit. Le CV est également téléchargeable en PDF.</p>
     <div class="pro-contact">
-      <div class="row"><b>E-mail</b><a href="mailto:enzomaronnier@gmail.com">enzomaronnier@gmail.com</a></div>
+      <div class="row"><b>E-mail</b><a href="mailto:enzomaronnier.pro@gmail.com">enzomaronnier.pro@gmail.com</a></div>
       <div class="row"><b>LinkedIn</b><a href="https://www.linkedin.com/in/enzo-maronnier-24361b270/" target="_blank" rel="noopener">Enzo Maronnier</a></div>
       <div class="row"><b>Curriculum vitæ</b><a href="documents/cv-enzo-maronnier.pdf" target="_blank" rel="noopener">Télécharger le PDF</a></div>
     </div>
@@ -528,7 +537,7 @@
       <div class="hairline"></div>
       <div class="hero-cta">
         <a href="#galerie" class="btn btn-primary">Voir la galerie</a>
-        <a href="#contact" class="btn btn-ghost">Prendre contact</a>
+        <a href="mailto:enzomaronnier.pro@gmail.com" class="btn btn-ghost">Prendre contact</a>
       </div>
     </div>
   </section>
@@ -646,7 +655,7 @@
       <span class="num">Réponse sous 48h</span>
     </div>
     <div class="contact">
-      <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='Message envoyé';">
+      <form id="contact-form">
         <div class="field">
           <label for="name">Nom</label>
           <input id="name" type="text" required>
@@ -662,7 +671,7 @@
         <button type="submit" class="btn btn-primary">Envoyer</button>
       </form>
       <div class="contact-info">
-        <div class="row"><b>E-mail</b><span>enzomaronnier@gmail.com</span></div>
+        <div class="row"><b>E-mail</b><a class="link-u" href="mailto:enzomaronnier.pro@gmail.com">enzomaronnier.pro@gmail.com</a></div>
         <div class="row"><b>Localisation</b><span>Paris, La Réunion</span></div>
         <div class="row">
           <b>Réseaux</b>
@@ -721,13 +730,20 @@
       professionnel: document.getElementById('professionnel'),
       artistique: document.getElementById('artistique')
     };
-    var titles = {
-      professionnel: 'Enzo Maronnier | Professionnel',
-      artistique: 'Enzo Maronnier | Artistique'
+    var TITLES = {
+      fr: { professionnel: 'Enzo Maronnier | Professionnel', artistique: 'Enzo Maronnier | Artistique' },
+      en: { professionnel: 'Enzo Maronnier | Professional', artistique: 'Enzo Maronnier | Artistic' }
     };
-    var contactTargets = { professionnel: '#contact-pro', artistique: '#contact' };
+    var titles = TITLES.fr;
+    window.__setTitles = function(lang){ titles = TITLES[lang] || TITLES.fr; if (current) document.title = titles[current]; };
     var tabs = document.querySelectorAll('[data-tab]');
-    var navContact = document.querySelector('[data-contact]');
+    var cf = document.getElementById('contact-form');
+    if (cf) cf.addEventListener('submit', function(e){
+      e.preventDefault();
+      var n = document.getElementById('name').value, m = document.getElementById('message').value, f = document.getElementById('email').value;
+      var body = m + '\n\n' + n + ' (' + f + ')';
+      location.href = 'mailto:enzomaronnier.pro@gmail.com?subject=' + encodeURIComponent((window.__lang && window.__lang() === 'en' ? 'Contact from the portfolio: ' : 'Contact depuis le portfolio : ') + n) + '&body=' + encodeURIComponent(body);
+    });
     var current = null;
 
     function show(name){
@@ -738,7 +754,6 @@
         if (t.dataset.tab === name) t.setAttribute('aria-current', 'page');
         else t.removeAttribute('aria-current');
       });
-      navContact.setAttribute('href', contactTargets[name]);
       document.title = titles[name];
     }
 
@@ -758,6 +773,63 @@
 
     window.addEventListener('hashchange', route);
     route();
+  })();
+
+  /* Langue : français (par défaut) ou anglais. Les textes français restent dans le HTML ;
+     le dictionnaire EN associe chaque texte français à sa traduction. */
+  (function(){
+    var EN = {"Professionnel": "Professional", "Artistique": "Artistic", "Parcours professionnel": "Professional background", "Conseil, vente et marketing du luxe": "Luxury advisory, sales and marketing", "Étudiant en deuxième année du Programme Grande École de KEDGE Business School, avec une spécialisation en marketing du luxe. Projet professionnel tourné vers la vente automobile de luxe, porté par un intérêt marqué pour le sport mécanique et la photographie.": "Second-year student in the Programme Grande École at KEDGE Business School, specializing in luxury marketing. Career goal in luxury automotive sales, driven by a strong interest in motorsport and photography.", "Télécharger le CV": "Download CV", "Profil LinkedIn": "LinkedIn profile", "Parcours": "Background", "Expériences et formation": "Experience and education", "De la relation client au luxe automobile": "From customer relations to luxury automotive", "Expériences": "Experience", "Janvier à juillet 2026": "January to July 2026", "Stage Sales Buyer": "Sales Buyer internship", "Traitement de plus de 4 000 appels, avec un taux de conversion de 60 % sur les appels entrants et de 40 % sur les appels sortants, suivi et analysé en continu. Négociation et gestion d'un portefeuille de biens immobiliers sur le marché parisien, en autonomie sur l'ensemble du cycle de négociation.": "Handled more than 4,000 calls, with a 60% conversion rate on inbound calls and 40% on outbound calls, tracked and analyzed continuously. Negotiation and management of a portfolio of properties on the Paris market, working independently across the entire negotiation cycle.", "Juin à juillet 2025": "June to July 2025", "Assistant en communication et management": "Communication and Management Assistant", "Mairie de Saint-Leu, La Réunion": "Saint-Leu Town Hall, La Réunion", "Pilotage en autonomie de la stratégie de contenu digital de la commune, avec suivi hebdomadaire des retombées et ajustement de la ligne éditoriale. Production de supports de communication, de la conception à la diffusion, dans des délais courts.": "Independent management of the town's digital content strategy, with weekly tracking of results and adjustment of the editorial line. Production of communication materials, from design to distribution, within tight deadlines.", "Novembre 2024 à décembre 2025": "November 2024 to December 2025", "Responsable Transition Impact": "Transition & Impact Manager", "Pilotage de la logistique et de la communication d'un gala de 250 personnes, en coordination de plusieurs équipes. Structuration de la communication événementielle, de la stratégie de diffusion au bilan post-événement.": "Management of the logistics and communication of a 250-guest gala, coordinating several teams. Structuring of event communication, from distribution strategy to post-event review.", "Formation": "Education", "Septembre 2024 à juin 2028": "September 2024 to June 2028", "Cursus entièrement en anglais. Principales matières : comptabilité, finance, droit des affaires, gestion de projet et de coûts, analyse de données, marketing, ressources humaines, RSE. Spécialisation en master : marketing du luxe.": "Fully English-taught program. Main subjects: accounting, finance, business law, project and cost management, data analysis, marketing, human resources, CSR. Master's specialization: luxury marketing.", "Septembre 2022 à juin 2024": "September 2022 to June 2024", "Classes préparatoires B/L": "Preparatory classes B/L (Humanities and Social Sciences)", "Lycée Marguerite Jauzelon, Saint-Denis de La Réunion": "Lycée Marguerite Jauzelon, Saint-Denis, La Réunion", "Sous-admissibilité à l'ENS Paris-Saclay.": "Sub-admissible to ENS Paris-Saclay.", "Langues": "Languages", "Niveaux": "Levels", "Anglais C1, espagnol B2, japonais débutant": "English C1, Spanish B2, Japanese beginner", "Français langue maternelle et créole réunionnais. TOEFL iBT 104/120.": "French (native) and Réunion Creole. TOEFL iBT 104/120.", "Langue et outils": "Language and tools", "Scores officiels": "Official scores", "17 janvier 2026": "January 17, 2026", "ETS, niveau C1 du CECRL": "ETS, CEFR level C1", "Lecture 30/30, compréhension orale 26/30, expression orale 26/30, expression écrite 22/30.": "Reading 30/30, Listening 26/30, Speaking 26/30, Writing 22/30.", "13 décembre 2024": "December 13, 2024", "Isograd, centre d'examen KEDGE Business School": "Isograd, KEDGE Business School exam center", "Niveau avancé, attesté par certificat officiel.": "Advanced level, attested by official certificate.", "Rendus académiques": "Academic work", "Dossiers, études et présentations": "Case studies, reports and presentations", "Sélection de travaux de groupe réalisés durant le master à KEDGE Business School, consultables au format PDF.": "A selection of group projects completed during the master's program at KEDGE Business School, available as PDF.", "Étude de cas · International Luxury": "Case study · International Luxury", "Hermès au Moyen-Orient": "Hermès in the Middle East", "Arbitrage entre héritage français et attentes culturelles des Émirats et du Koweït. Recommandation d'une collection équestre capsule, d'un défilé dans le désert et de pop-ups sur invitation. Validation du projet par Alexia Glere, Client Experience Project Manager chez Hermès, avec mention de la qualité du travail.": "Balancing French heritage with the cultural expectations of the Emirates and Kuwait. Recommendation of an equestrian capsule collection, a desert fashion show and invitation-only pop-ups. Project validated by Alexia Glere, Client Experience Project Manager at Hermès, who praised the quality of the work.", "Consulter le PDF": "View PDF", "Rapport · Experiential Luxury": "Report · Experiential Luxury", "Octobre 2025": "October 2025", "Van Cleef & Arpels : l'authentification comme expérience": "Van Cleef & Arpels: authentication as an experience", "Analyse de la transformation d'un service d'authentification de bijoux en parcours émotionnel et immersif, au service de la confiance et de l'exclusivité.": "Analysis of how a jewelry authentication service is turned into an emotional, immersive journey serving trust and exclusivity.", "Rapport · The World of Luxury": "Report · The World of Luxury", "Chanel Voyage : l'expérience yachting": "Chanel Voyage: the yachting experience", "Concept de voyage en mer entre haute couture et savoir-faire, prolongeant l'héritage de Gabrielle Chanel et son lien avec la mer.": "A voyage-at-sea concept blending haute couture and craftsmanship, extending Gabrielle Chanel's heritage and her bond with the sea.", "Rapport · Digital Luxury": "Report · Digital Luxury", "Décembre 2025": "December 2025", "Prada : une expérience digitale": "Prada: a digital experience", "Étude d'une expérience en ligne qui prolonge la rencontre de service en boutique, du positionnement de la marque à la stratégie de mise en œuvre.": "Study of an online experience that extends the in-store service encounter, from brand positioning to implementation strategy.", "Échanger sur une opportunité": "Let's discuss an opportunity", "Réponse sous 48 h": "Reply within 48 hours", "Réponse sous 48h": "Reply within 48 hours", "Pour toute opportunité ou prise de contact, un message suffit. Le CV est également téléchargeable en PDF.": "For any opportunity or inquiry, a message is all it takes. The CV is also available as a PDF.", "E-mail": "Email", "Curriculum vitæ": "Curriculum vitae", "Télécharger le PDF": "Download PDF", "Photographie — Automobile · Architecture · Nature": "Photography — Automotive · Architecture · Nature", "L'instant, la ligne, la lumière": "The moment, the line, the light", "Enzo Maronnier. Un regard porté sur l'automobile de caractère, l'architecture et les paysages qui prennent le temps.": "Enzo Maronnier. A perspective on distinctive automobiles, architecture and landscapes that stand the test of time.", "Voir la galerie": "View the gallery", "Prendre contact": "Get in touch", "Galerie": "Gallery", "Tout": "All", "Automobile": "Automotive", "Dernière danse, Catalogne": "Last dance, Catalonia", "Roue contre roue": "Wheel to wheel", "Dino, rayonnante": "Dino, radiant", "Formes sous saule": "Shapes beneath a willow", "En direct": "Live", "Sur Instagram": "On Instagram", "Avant / Après": "Before / After", "Retouche photo": "Photo retouching", "Un aperçu du travail": "A glimpse of the work", "Un aperçu de mon travail de retouche : glisse le curseur pour comparer la photo brute et sa version finale.": "A glimpse of my retouching work: drag the slider to compare the raw photo with its final version.", "Cinéma": "Cinema", "Court métrage": "Short film", "Prochainement": "Coming soon", "Un court métrage dans lequel j'ai joué sera présenté ici : synopsis, affiche et extrait vidéo, dès sa diffusion.": "A short film in which I acted will be presented here: synopsis, poster and video excerpt, as soon as it is released.", "À propos": "About", "Le photographe": "The photographer", "Étudiant à KEDGE Business School, je partage mon temps entre la finance et la photographie. Cette dernière est née d'une passion pour l'automobile de caractère, avant de s'élargir à l'architecture et aux paysages qui l'entourent.": "A student at KEDGE Business School, I split my time between finance and photography. The latter grew out of a passion for distinctive automobiles before widening to architecture and the landscapes around them.", "Mon approche reste la même quel que soit le sujet : chercher la ligne juste, la lumière du bon moment, et cette forme de permanence qui distingue un objet ou un lieu bien pensé.": "My approach stays the same whatever the subject: finding the right line, the light of the right moment, and that sense of permanence that sets apart a well-conceived object or place.", "Ce site est aussi le point de départ d'un futur service de prestation photographique, pensé pour des événements automobiles, des séances en extérieur et des projets sur mesure.": "This site is also the starting point of a future photography service, designed for automotive events, outdoor sessions and tailor-made projects.", "Année de pratique": "Year of practice", "Clichés en ligne": "Shots online", "Univers explorés": "Worlds explored", "Découvrir mon parcours professionnel": "Discover my professional background", "Discutons de votre projet": "Let's talk about your project", "Nom": "Name", "Envoyer": "Send", "Localisation": "Location", "Réseaux": "Social", "Suivre le travail": "Follow the work", "Retrouvez-moi ailleurs": "Find me elsewhere", "Portfolio professionnel et artistique": "Professional and artistic portfolio", "Navigation principale": "Main navigation", "Portrait d'Enzo Maronnier": "Portrait of Enzo Maronnier", "Emplacement réservé au court métrage": "Placeholder for the short film"};
+    var DESC = { fr: document.querySelector('meta[name="description"]').content,
+                 en: 'Portfolio of Enzo Maronnier: professional background in luxury marketing and sales, and artistic work in photography.' };
+    var norm = function(t){ return t.replace(/\s+/g, ' ').trim(); };
+    var orig = new WeakMap(), attrOrig = new WeakMap();
+    var btn = document.getElementById('lang-toggle');
+    var lang = 'fr';
+
+    function translateText(l){
+      var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      var n;
+      while ((n = w.nextNode())) {
+        var pn = n.parentNode.nodeName;
+        if (pn === 'SCRIPT' || pn === 'STYLE') continue;
+        if (!orig.has(n)) orig.set(n, n.nodeValue);
+        var o = orig.get(n), key = norm(o), out = null;
+        if (l === 'en') {
+          if (EN[key]) out = EN[key];
+          else { var m = key.match(/^(\d+) clichés$/); if (m) out = m[1] + ' shots'; }
+        }
+        if (l === 'en' && out) {
+          var lead = o.match(/^\s*/)[0], trail = o.match(/\s*$/)[0];
+          n.nodeValue = lead + out + trail;
+        } else n.nodeValue = o;
+      }
+      document.querySelectorAll('[aria-label],[alt]').forEach(function(e){
+        ['aria-label','alt'].forEach(function(a){
+          if (!e.hasAttribute(a) || e === btn) return;
+          var store = attrOrig.get(e) || {}; if (!(a in store)) store[a] = e.getAttribute(a); attrOrig.set(e, store);
+          e.setAttribute(a, (l === 'en' && EN[store[a]]) ? EN[store[a]] : store[a]);
+        });
+      });
+    }
+
+    function setLang(l, save){
+      lang = l;
+      document.documentElement.lang = l;
+      translateText(l);
+      document.querySelector('meta[name="description"]').content = DESC[l];
+      if (window.__setTitles) window.__setTitles(l);
+      btn.textContent = l === 'fr' ? 'EN' : 'FR';
+      btn.setAttribute('lang', l === 'fr' ? 'en' : 'fr');
+      btn.setAttribute('aria-label', l === 'fr' ? 'Switch to English' : 'Passer en français');
+      if (save) { try { localStorage.setItem('lang', l); } catch(e){} }
+    }
+    window.__lang = function(){ return lang; };
+
+    var start = 'fr';
+    try { var saved = localStorage.getItem('lang'); if (saved === 'fr' || saved === 'en') start = saved;
+          else if ((navigator.language || '').slice(0,2).toLowerCase() === 'en') start = 'en'; } catch(e){}
+    btn.addEventListener('click', function(){ setLang(lang === 'fr' ? 'en' : 'fr', true); });
+    if (start === 'en') setLang('en', false);
   })();
 </script>
 </body>
