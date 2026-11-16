@@ -10,15 +10,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Cormorant:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    color-scheme: light;
-    --bg: #ffffff;
-    --surface: #ffffff;
-    --surface-2: #f1efe9;
-    --text: #0c0c0b;
-    --muted: #6b665c;
-    --line: rgba(12,12,11,0.14);
-    --accent: #8a6b3f;
-    --accent-deep: #4a4030;
+    color-scheme: dark;
+    --bg: #0b0b0a;
+    --surface: #0b0b0a;
+    --surface-2: #161512;
+    --text: #f2eee4;
+    --muted: #a8a295;
+    --line: rgba(242,238,228,0.16);
+    --accent: #c4a46b;
+    --accent-deep: #d9c49a;
     --green: #3c4a3a;
   }
 
@@ -89,9 +89,10 @@
   .hero-bg{
     position:absolute; inset:0; z-index:0;
     background-color: #2a241c;
-    background-image: url(images/hero.jpg.JPG);
+    background-image: url(images/hero-mobile.webp);
     background-size: cover; background-position: center 42%;
   }
+  @media (min-width:900px){ .hero-bg{ background-image: url(images/hero.webp); } }
   .hero-vignette{
     position:absolute; inset:0; z-index:1;
     background: radial-gradient(ellipse 80% 70% at 50% 40%, transparent 45%, rgba(0,0,0,.42) 100%);
@@ -133,7 +134,7 @@
     font-family:'Jost', sans-serif; color:var(--text);
   }
   .btn-primary{ background: var(--text); color: var(--bg); }
-  .btn-primary:hover{ background: var(--accent); border-color: var(--accent); color:#fff; }
+  .btn-primary:hover{ background: var(--accent); border-color: var(--accent); color:#0b0b0a; }
   .btn-ghost{ border-color: rgba(255,255,255,.7); color:#fff; }
   .btn-ghost:hover{ border-color: #fff; background: rgba(255,255,255,.12); }
   .btn-outline:hover{ border-color: var(--accent); color: var(--accent); }
@@ -227,20 +228,21 @@
     display:flex; align-items:flex-end; padding:20px;
     border: 1px solid var(--surface);
   }
-  .shot::before{ content:''; position:absolute; inset:0; background: linear-gradient(0deg, rgba(20,18,14,.55), transparent 60%); }
-  .shot > *{ position:relative; z-index:1; }
+  .shot::before{ content:''; position:absolute; inset:0; z-index:1; background: linear-gradient(0deg, rgba(20,18,14,.55), transparent 60%); }
+  .shot > div{ position:relative; z-index:2; }
+  .shot > img.shot-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
   .shot .cat{ font-size:0.68rem; letter-spacing:0.16em; text-transform:uppercase; color: rgba(255,255,255,.85); }
   .shot .ttl{ font-family:'Cormorant Garamond', serif; font-weight:500; font-style:italic; color:#fff; font-size:1.15rem; margin-top:3px; }
 
-  .s1{ grid-column: span 3; aspect-ratio:4/3; background: url(images/corner_porsche.jpg) center/cover; }
-  .s2{ grid-column: span 3; aspect-ratio:4/3; background: url(images/verstappen_audi.jpg) center/cover; }
-  .s3{ grid-column: span 2; aspect-ratio:1/1; background: url(images/gecko.jpg) center/cover; }
-  .s4{ grid-column: span 2; aspect-ratio:1/1; background: url(images/sinj.jpg) center/cover; }
-  .s5{ grid-column: span 2; aspect-ratio:1/1; background: url(images/sinj2.jpg) center/cover; }
-  .s6{ grid-column: span 4; aspect-ratio:16/9; background: url(images/quartier_rouge_amsterdam.jpg) center/cover; }
-  .s7{ grid-column: span 2; aspect-ratio:1/1; background: url(images/dome_invalides.jpg) center/cover; }
-  .s8{ grid-column: span 3; aspect-ratio:4/3; background: url(images/dino_rallyedesprincesses.jpg) center/cover; }
-  .s9{ grid-column: span 3; aspect-ratio:4/3; background: url(images/mystique_amsterdam.jpg) center/cover; }
+  .s1{ grid-column: span 3; aspect-ratio:4/3; }
+  .s2{ grid-column: span 3; aspect-ratio:4/3; }
+  .s3{ grid-column: span 2; aspect-ratio:1/1; }
+  .s4{ grid-column: span 2; aspect-ratio:1/1; }
+  .s5{ grid-column: span 2; aspect-ratio:1/1; }
+  .s6{ grid-column: span 4; aspect-ratio:16/9; }
+  .s7{ grid-column: span 2; aspect-ratio:1/1; }
+  .s8{ grid-column: span 3; aspect-ratio:4/3; }
+  .s9{ grid-column: span 3; aspect-ratio:4/3; }
 
   @media (max-width:860px){
     .gallery{ grid-template-columns: repeat(2,1fr); }
@@ -251,9 +253,9 @@
 
   /* Court métrage */
   .film-frame{
-    aspect-ratio: 21/9; background:#0c0c0b; color:#f2eee4;
+    aspect-ratio: 21/9; background:#000; color:#f2eee4;
     display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px;
-    border-top:10px solid #000; border-bottom:10px solid #000; outline:1px solid var(--line);
+    border-top:10px solid #1a1814; border-bottom:10px solid #1a1814; outline:1px solid var(--line);
   }
   .film-frame .soon{ font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:500; font-size:clamp(1.6rem, 3.6vw, 2.8rem); }
   .film-frame .bar{ width:56px; height:1px; background: var(--accent); }
@@ -319,6 +321,8 @@
     .pro-intro{ padding-top:160px; }
   }
 </style>
+<link rel="preload" as="image" href="images/hero-mobile.webp" media="(max-width:899px)">
+<link rel="preload" as="image" href="images/hero.webp" media="(min-width:900px)">
 </head>
 <body>
 <div class="container">
@@ -366,11 +370,11 @@
     <h3 class="group-title">Expériences</h3>
     <ol class="timeline">
       <li>
-        <div class="tl-date">Depuis janvier 2026</div>
+        <div class="tl-date">Janvier à juillet 2026</div>
         <div class="tl-body">
           <h3>Stage Sales Buyer</h3>
           <p class="tl-org">Zefir, Paris</p>
-          <p>Traitement d'environ 4 000 appels entrants et sortants depuis le début du stage.</p>
+          <p>Traitement de plus de 4 000 appels, avec un taux de conversion de 60 % sur les appels entrants et de 40 % sur les appels sortants, suivi et analysé en continu. Négociation et gestion d'un portefeuille de biens immobiliers sur le marché parisien, en autonomie sur l'ensemble du cycle de négociation.</p>
         </div>
       </li>
       <li>
@@ -382,19 +386,19 @@
         </div>
       </li>
       <li>
-        <div class="tl-date">Été 2025</div>
+        <div class="tl-date">Juin à juillet 2025</div>
         <div class="tl-body">
-          <h3>Stage en communication</h3>
+          <h3>Assistant en communication et management</h3>
           <p class="tl-org">Mairie de Saint-Leu, La Réunion</p>
-          <p>Missions de communication au sein de la commune de Saint-Leu.</p>
+          <p>Pilotage en autonomie de la stratégie de contenu digital de la commune, avec suivi hebdomadaire des retombées et ajustement de la ligne éditoriale. Production de supports de communication, de la conception à la diffusion, dans des délais courts.</p>
         </div>
       </li>
       <li>
-        <div class="tl-date">Vie associative</div>
+        <div class="tl-date">Novembre 2024 à décembre 2025</div>
         <div class="tl-body">
           <h3>Responsable Transition Impact</h3>
           <p class="tl-org">KEDGE Motors Club</p>
-          <p>Responsabilité des enjeux de transition et d'impact du club automobile de l'école, après un premier engagement au Pôle Événementiel.</p>
+          <p>Pilotage de la logistique et de la communication d'un gala de 250 personnes, en coordination de plusieurs équipes. Structuration de la communication événementielle, de la stratégie de diffusion au bilan post-événement.</p>
         </div>
       </li>
     </ol>
@@ -402,11 +406,11 @@
     <h3 class="group-title">Formation</h3>
     <ol class="timeline">
       <li>
-        <div class="tl-date">En cours</div>
+        <div class="tl-date">Septembre 2024 à juin 2028</div>
         <div class="tl-body">
           <h3>Programme Grande École, M1</h3>
           <p class="tl-org">KEDGE Business School</p>
-          <p>Spécialisation en marketing du luxe.</p>
+          <p>Cursus entièrement en anglais. Principales matières : comptabilité, finance, droit des affaires, gestion de projet et de coûts, analyse de données, marketing, ressources humaines, RSE. Spécialisation en master : marketing du luxe.</p>
         </div>
       </li>
       <li>
@@ -418,10 +422,10 @@
         </div>
       </li>
       <li>
-        <div class="tl-date">Avant KEDGE</div>
+        <div class="tl-date">Septembre 2022 à juin 2024</div>
         <div class="tl-body">
           <h3>Classes préparatoires B/L</h3>
-          <p class="tl-org">Classes préparatoires aux grandes écoles</p>
+          <p class="tl-org">Lycée Marguerite Jauzelon, Saint-Denis de La Réunion</p>
           <p>Sous-admissibilité à l'ENS Paris-Saclay.</p>
         </div>
       </li>
@@ -432,8 +436,8 @@
       <li>
         <div class="tl-date">Niveaux</div>
         <div class="tl-body">
-          <h3>Anglais C1, espagnol B2</h3>
-          <p>Notions de japonais. Communication avec la clientèle en français, en anglais, en néerlandais et en allemand.</p>
+          <h3>Anglais C1, espagnol B2, japonais débutant</h3>
+          <p>Français langue maternelle et créole réunionnais. TOEFL 105/120.</p>
         </div>
       </li>
     </ol>
@@ -524,7 +528,7 @@
         <span class="kicker">Portfolio</span>
         <h2>Galerie</h2>
       </div>
-      <span class="num">12 clichés</span>
+      <span class="num" id="shot-count">9 clichés</span>
     </div>
     <div class="filters">
       <button class="filter-btn active" data-filter="all">Tout</button>
@@ -533,15 +537,15 @@
       <button class="filter-btn" data-filter="nature">Nature</button>
     </div>
     <div class="gallery" id="galleryGrid">
-      <div class="shot s1" data-cat="auto"><div><div class="cat">Automobile</div><div class="ttl">Dernière danse, Catalogne</div></div></div>
-      <div class="shot s2" data-cat="auto"><div><div class="cat">Automobile</div><div class="ttl">Roue contre roue</div></div></div>
-      <div class="shot s3" data-cat="nature"><div><div class="cat">Nature</div><div class="ttl">Phelsuma madagascariensis</div></div></div>
-      <div class="shot s4" data-cat="nature"><div><div class="cat">Nature</div><div class="ttl">Eulemur coronatus</div></div></div>
-      <div class="shot s5" data-cat="nature"><div><div class="cat">Nature</div><div class="ttl">Eulemur albifrons</div></div></div>
-      <div class="shot s6" data-cat="archi"><div><div class="cat">Architecture</div><div class="ttl">Red District, Amsterdam</div></div></div>
-      <div class="shot s7" data-cat="archi"><div><div class="cat">Architecture</div><div class="ttl">Palais des Invalides, Paris</div></div></div>
-      <div class="shot s8" data-cat="auto"><div><div class="cat">Automobile</div><div class="ttl">Dino, rayonnante</div></div></div>
-      <div class="shot s9" data-cat="archi"><div><div class="cat">Architecture</div><div class="ttl">Formes sous saule</div></div></div>
+      <div class="shot s1" data-cat="auto"><img class="shot-img" src="images/corner_porsche.webp" alt="Dernière danse, Catalogne" loading="lazy" decoding="async"><div><div class="cat">Automobile</div><div class="ttl">Dernière danse, Catalogne</div></div></div>
+      <div class="shot s2" data-cat="auto"><img class="shot-img" src="images/verstappen_audi.webp" alt="Roue contre roue" loading="lazy" decoding="async"><div><div class="cat">Automobile</div><div class="ttl">Roue contre roue</div></div></div>
+      <div class="shot s3" data-cat="nature"><img class="shot-img" src="images/gecko.webp" alt="Phelsuma madagascariensis" loading="lazy" decoding="async"><div><div class="cat">Nature</div><div class="ttl">Phelsuma madagascariensis</div></div></div>
+      <div class="shot s4" data-cat="nature"><img class="shot-img" src="images/sinj.webp" alt="Eulemur coronatus" loading="lazy" decoding="async"><div><div class="cat">Nature</div><div class="ttl">Eulemur coronatus</div></div></div>
+      <div class="shot s5" data-cat="nature"><img class="shot-img" src="images/sinj2.webp" alt="Eulemur albifrons" loading="lazy" decoding="async"><div><div class="cat">Nature</div><div class="ttl">Eulemur albifrons</div></div></div>
+      <div class="shot s6" data-cat="archi"><img class="shot-img" src="images/quartier_rouge_amsterdam.webp" alt="Red District, Amsterdam" loading="lazy" decoding="async"><div><div class="cat">Architecture</div><div class="ttl">Red District, Amsterdam</div></div></div>
+      <div class="shot s7" data-cat="archi"><img class="shot-img" src="images/dome_invalides.webp" alt="Palais des Invalides, Paris" loading="lazy" decoding="async"><div><div class="cat">Architecture</div><div class="ttl">Palais des Invalides, Paris</div></div></div>
+      <div class="shot s8" data-cat="auto"><img class="shot-img" src="images/dino_rallyedesprincesses.webp" alt="Dino, rayonnante" loading="lazy" decoding="async"><div><div class="cat">Automobile</div><div class="ttl">Dino, rayonnante</div></div></div>
+      <div class="shot s9" data-cat="archi"><img class="shot-img" src="images/mystique_amsterdam.webp" alt="Formes sous saule" loading="lazy" decoding="async"><div><div class="cat">Architecture</div><div class="ttl">Formes sous saule</div></div></div>
     </div>
   </section>
 
@@ -684,6 +688,7 @@
   (function(){
     var buttons = document.querySelectorAll('.filter-btn');
     var shots = document.querySelectorAll('.shot');
+    var cnt = document.getElementById('shot-count'); if (cnt) cnt.textContent = shots.length + ' clichés';
     buttons.forEach(function(btn){
       btn.addEventListener('click', function(){
         buttons.forEach(function(b){ b.classList.remove('active'); });
