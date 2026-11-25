@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" translate="no">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -81,13 +81,15 @@
     .tab::after{ bottom:-1px; }
   }
 
+  .nav-ig{ display:inline-flex; align-items:center; color:var(--muted); margin-left:-14px; transition: color .2s; }
+  .nav-ig:hover{ color:var(--accent); }
   .lang-toggle{
     background:transparent; border:1px solid var(--line); color:var(--muted); cursor:pointer;
     font-family:'Jost', sans-serif; font-size:0.72rem; letter-spacing:0.14em; padding:6px 11px;
     margin-left:-12px; transition: color .2s, border-color .2s;
   }
   .lang-toggle:hover{ color:var(--accent); border-color:var(--accent); }
-  @media (max-width:720px){ .lang-toggle{ margin:0 0 12px; } }
+  @media (max-width:720px){ .nav-ig{ margin:0 0 12px auto; } .lang-toggle{ margin:0 0 12px 14px; } }
 
   /* HERO artistique : bannière plein écran */
   .hero-banner{
@@ -258,7 +260,21 @@
     .s1,.s2,.s3,.s4,.s5,.s6,.s7,.s8,.s9{ grid-column: span 1; aspect-ratio:4/3; }
   }
 
-  #instagram-embed, #before-after-embed{ min-height: 80px; }
+  #before-after-embed{ min-height: 80px; }
+
+  /* Téléphone : espacements resserrés, vignettes verticales, textes à l'échelle */
+  @media (max-width:720px){
+    section{ padding-top:64px; padding-bottom:64px; }
+    .section-head{ margin-bottom:32px; }
+    .filters{ margin-bottom:24px; gap:8px; }
+    .shot{ padding:14px; min-height:0; }
+    .shot .ttl{ font-size:1.02rem; }
+    .shot .cat{ font-size:0.62rem; }
+  }
+  @media (max-width:560px){
+    .s1,.s2,.s3,.s4,.s5,.s6,.s7,.s8{ aspect-ratio:4/5; }
+    .s9{ grid-column: span 2; aspect-ratio:16/9; }
+  }
 
   /* Court métrage */
   .film-frame{
@@ -332,6 +348,7 @@
 </style>
 <link rel="preload" as="image" href="images/hero-mobile.webp" media="(max-width:899px)">
 <link rel="preload" as="image" href="images/hero.webp" media="(min-width:900px)">
+<meta name="google" content="notranslate">
 </head>
 <body>
 <div class="container">
@@ -345,6 +362,9 @@
         <a class="tab" href="#artistique" data-tab="artistique" aria-current="page">Artistique</a>
       </div>
       <a class="nav-contact" href="mailto:enzomaronnier.pro@gmail.com" data-contact>Contact</a>
+      <a class="nav-ig" href="https://www.instagram.com/by.senzoo" target="_blank" rel="noopener" aria-label="Instagram @by.senzoo" title="Instagram @by.senzoo">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none"/></svg>
+      </a>
       <button type="button" class="lang-toggle" id="lang-toggle" aria-label="Switch language" lang="en">EN</button>
     </div>
   </nav>
@@ -568,21 +588,6 @@
       <div class="shot s7" data-cat="archi"><img class="shot-img" src="images/dome_invalides.webp" alt="Palais des Invalides, Paris" loading="lazy" decoding="async"><div><div class="cat">Architecture</div><div class="ttl">Palais des Invalides, Paris</div></div></div>
       <div class="shot s8" data-cat="auto"><img class="shot-img" src="images/dino_rallyedesprincesses.webp" alt="Dino, rayonnante" loading="lazy" decoding="async"><div><div class="cat">Automobile</div><div class="ttl">Dino, rayonnante</div></div></div>
       <div class="shot s9" data-cat="archi"><img class="shot-img" src="images/mystique_amsterdam.webp" alt="Formes sous saule" loading="lazy" decoding="async"><div><div class="cat">Architecture</div><div class="ttl">Formes sous saule</div></div></div>
-    </div>
-  </section>
-
-  <section id="instagram">
-    <div class="section-head">
-      <div>
-        <span class="kicker">En direct</span>
-        <h2>Sur Instagram</h2>
-      </div>
-      <span class="num">@by.senzoo</span>
-    </div>
-    <div id="instagram-embed">
-      <iframe src="https://emb.fouita.com/widget/0x53dd31/ftr00lf0z"
-        title="Carousel Social Feed Widget" width="100%" height="500" frameborder="0" loading="lazy">
-      </iframe>
     </div>
   </section>
 
@@ -831,6 +836,8 @@
     try { var saved = localStorage.getItem('lang'); if (saved === 'fr' || saved === 'en') start = saved;
           else if ((navigator.language || '').slice(0,2).toLowerCase() === 'en') start = 'en'; } catch(e){}
     btn.addEventListener('click', function(){ setLang(lang === 'fr' ? 'en' : 'fr', true); });
+    window.addEventListener('hashchange', function(){ translateText(lang); if (window.__setTitles) window.__setTitles(lang); });
+    window.addEventListener('pageshow', function(){ translateText(lang); });
     if (start === 'en') setLang('en', false);
   })();
 </script>
