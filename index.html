@@ -758,7 +758,7 @@
     </div>
     <div class="presta">
       <p>Au-delà du portfolio, je propose des prestations photographiques : couverture d'événements automobiles, rassemblements et rallyes, séances en extérieur, ainsi que projets sur mesure pour des marques, des clubs et des particuliers. Chaque mission est préparée avec le client, de l'intention visuelle à la livraison des images retouchées.</p>
-      <a class="btn btn-primary" href="#contact">Demander un devis</a>
+      <a class="btn btn-primary" id="quote-btn" href="#contact">Demander un devis</a>
     </div>
   </section>
 
@@ -863,11 +863,23 @@
     window.__setTitles = function(lang){ titles = TITLES[lang] || TITLES.fr; if (current) document.title = titles[current]; };
     var tabs = document.querySelectorAll('[data-tab]');
     var cf = document.getElementById('contact-form');
+    var quoteMode = false;
+    var qb = document.getElementById('quote-btn');
+    if (qb) qb.addEventListener('click', function(){
+      quoteMode = true;
+      var en = window.__lang && window.__lang() === 'en';
+      var ta = document.getElementById('message');
+      if (ta && !ta.value) ta.value = en ? 'Hello, I would like a quote for: ' : 'Bonjour, je souhaiterais un devis pour : ';
+      setTimeout(function(){ if (ta) { ta.focus({preventScroll:true}); ta.setSelectionRange(ta.value.length, ta.value.length); } }, 400);
+    });
     if (cf) cf.addEventListener('submit', function(e){
       e.preventDefault();
       var n = document.getElementById('name').value, m = document.getElementById('message').value, f = document.getElementById('email').value;
       var body = m + '\n\n' + n + ' (' + f + ')';
-      location.href = 'mailto:enzomaronnier.pro@gmail.com?subject=' + encodeURIComponent((window.__lang && window.__lang() === 'en' ? 'Contact from the portfolio: ' : 'Contact depuis le portfolio : ') + n) + '&body=' + encodeURIComponent(body);
+      var en2 = window.__lang && window.__lang() === 'en';
+      var subj = quoteMode ? (en2 ? 'Quote request: ' : 'Demande de devis : ') : (en2 ? 'Contact from the portfolio: ' : 'Contact depuis le portfolio : ');
+      quoteMode = false;
+      location.href = 'mailto:enzomaronnier.pro@gmail.com?subject=' + encodeURIComponent(subj + n) + '&body=' + encodeURIComponent(body);
     });
     var current = null;
 
